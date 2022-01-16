@@ -31,7 +31,50 @@ npm install
 
 ## Getting started
 
-Save the following script to gettingStarted.js
+Save the following script to gettingStartedonTestNet.js
+Change the shelleyGenesisPath to the path of the "testnet-shelley-genesis.json" file ( should be in the cardano-node file.
+
+```javascript
+const CardanocliJs = require("cardanocli-js");
+const shelleyGenesisPath = "../..//tconfig/testnet-shelley-genesis.json";
+const options={}
+options.shelleyGenesisPath = shelleyGenesisPath
+options.network = "testnet-magic 1097911063"
+
+const cardanocliJs = new CardanocliJs(options);
+
+const createWallet = (account) => {
+    try{
+        paymentKeys = cardanocliJs.addressKeyGen(account);
+        stakeKeys   = cardanocliJs.stakeAddressKeyGen(account);
+        stakeAddr   = cardanocliJs.stakeAddressBuild(account);
+        paymentAddr = cardanocliJs.addressBuild(account,{
+            "paymentVkey": paymentKeys.vkey,
+            "stakeVkey": stakeKeys.vkey
+        });
+        return cardanocliJs.wallet(account);
+    }
+    catch(err){
+        console.log(err)
+    }
+
+};
+
+const createPool = (name) => {
+  cardanocliJs.nodeKeyGenKES(name);
+  cardanocliJs.nodeKeyGen(name);
+  cardanocliJs.nodeIssueOpCert(name);
+  cardanocliJs.nodeKeyGenVRF(name);
+  return cardanocliJs.pool(name);
+};
+
+const wallet = createWallet("Ada");
+const pool = createPool("Berry");
+
+console.log(wallet.paymentAddr);
+console.log(pool.vrf.vkey);
+```
+
 
 ```javascript
 const CardanocliJs = require("cardanocli-js");
