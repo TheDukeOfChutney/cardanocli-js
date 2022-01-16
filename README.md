@@ -31,6 +31,8 @@ npm install
 
 ## Getting started
 
+Save the following script to gettingStarted.js
+
 ```javascript
 const CardanocliJs = require("cardanocli-js");
 const shelleyGenesisPath = "/home/ada/mainnet-shelley-genesis.json";
@@ -61,6 +63,11 @@ const pool = createPool("Berry");
 
 console.log(wallet.paymentAddr);
 console.log(pool.vrf.vkey);
+```
+Start the cardano node on the testnet, and wait for 100% sync.
+
+```bash
+node gettingStarted.js
 ```
 
 Check /examples for more use cases.
